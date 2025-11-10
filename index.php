@@ -132,7 +132,7 @@
     <!-- NAVBAR -->
     <nav>
       <div class="logo">InkRipple</div>
-      <a href="login.html" class="login-btn">Login</a>
+      <a href="login.php" class="login-btn">Login</a>
     </nav>
 
     <!-- BLOG POSTS -->

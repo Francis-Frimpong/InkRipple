@@ -1,3 +1,14 @@
+<?php
+  session_start();
+  session_regenerate_id(true);
+
+
+
+  if (!isset($_SESSION['user_id'])){
+    header("Location:login.php");
+    exit;
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -175,13 +186,16 @@
         <a href="dashboard.html">Dashboard</a>
         <a href="createPost.html">Create Post</a>
         <a href="#">Profile</a>
-        <a href="#" class="logout-btn">Logout</a>
+        <form action="logout.php" method="POST">
+          <button class="logout-btn" type="submit" name="logout">Logout</button>
+        </form>
+        
       </div>
     </nav>
 
     <!-- WELCOME MESSAGE -->
     <div class="welcome">
-      <h2>Welcome, Francis 👋</h2>
+      <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
     </div>
 
     <!-- BLOG POSTS -->

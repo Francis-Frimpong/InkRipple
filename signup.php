@@ -1,3 +1,37 @@
+<?php
+  include './db/database.php';
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fullname'], $_POST['email'], $_POST['password'])) {
+    $name = trim($_POST['fullname']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    if(empty($name) || empty($email) || empty($password)){
+      echo "All fields are required.";
+      exit;
+    }
+
+    // verify if already email exist
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+
+    if($stmt->fetch()){
+      echo "Email already exists!";
+    }
+
+    // hash password and insert user
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $stmt = $pdo->prepare("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)");
+    $stmt->execute([$name, $email, $hashedPassword]);
+    echo "Registration successful!";
+    header("Location:login.php");
+
+  }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -114,13 +148,13 @@
   <body>
     <div class="form-container">
       <h2>Create Your InkRipple Account</h2>
-      <form action="#" method="POST">
-        <input type="text" placeholder="Full Name" required />
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
+      <form action="signup.php" method="POST">
+        <input type="text" name='fullname' placeholder="Full Name" required />
+        <input type="email" name='email' placeholder="Email" required />
+        <input type="password" name='password' placeholder="Password" required />
         <button type="submit">Sign Up</button>
       </form>
-      <p>Already have an account? <a href="login.html">Login here</a></p>
+      <p>Already have an account? <a href="login.php">Login here</a></p>
     </div>
   </body>
 </html>
