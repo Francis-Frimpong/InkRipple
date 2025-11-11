@@ -1,3 +1,30 @@
+<?php 
+   session_start();
+   include './db/database.php';
+   $userId = $_SESSION['user_id'];
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $title = trim($_POST['title']);
+    $content = $_POST['content'];
+
+    if (empty($title) || empty($content)){
+      echo "Please enter into feilds.";
+      exit;
+    }
+
+    // insert into poste
+    $stmt = $pdo->prepare("INSERT INTO posts (user_id, title, content) 
+    VALUES(?, ? , ?)");
+    $stmt->execute([$userId ,$title, $content]);
+    
+    header("Location:home.php");
+    exit;
+  
+  }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -194,7 +221,7 @@
     <nav>
       <div class="logo">InkRipple</div>
       <div class="nav-links">
-        <a href="home.html">Home</a>
+        <a href="home.php">Home</a>
         <a href="dashboard.html">Dashboard</a>
         <a href="#">Profile</a>
         <a href="#" class="logout-btn">Logout</a>
@@ -205,7 +232,7 @@
     <div class="container">
       <div class="form-box">
         <h2>Create a New Post</h2>
-        <form action="#" method="POST">
+        <form action="createPost.php" method="POST">
           <div>
             <label for="title">Post Title</label>
             <input

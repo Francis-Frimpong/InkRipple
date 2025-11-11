@@ -183,8 +183,8 @@
       <div class="logo">InkRipple</div>
       <div class="nav-links">
         <a href="#">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="createPost.html">Create Post</a>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="createPost.php">Create Post</a>
         <a href="#">Profile</a>
         <form action="logout.php" method="POST">
           <button class="logout-btn" type="submit" name="logout">Logout</button>

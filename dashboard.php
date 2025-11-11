@@ -1,3 +1,15 @@
+<?php
+  session_start();
+  session_regenerate_id(true);
+
+
+
+  if (!isset($_SESSION['user_id'])){
+    header("Location:login.php");
+    exit;
+  }
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -147,8 +159,8 @@
     <nav>
       <div class="logo">InkRipple</div>
       <div class="nav-links">
-        <a href="home.html">Home</a>
-        <a href="#">Create Post</a>
+        <a href="home.php">Home</a>
+        <a href="createPost.php">Create Post</a>
         <a href="#">Profile</a>
         <a href="#" class="logout-btn">Logout</a>
       </div>
@@ -157,7 +169,7 @@
     <!-- DASHBOARD CONTENT -->
     <div class="container">
       <div class="welcome">
-        <h2>Welcome, Francis 👋</h2>
+        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
         <p>Here are your recent posts on InkRipple.</p>
       </div>
 
