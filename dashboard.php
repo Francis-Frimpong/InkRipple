@@ -1,13 +1,20 @@
 <?php
   session_start();
   session_regenerate_id(true);
+  include './db/database.php';
+  $userId = $_SESSION['user_id'];
 
 
 
-  if (!isset($_SESSION['user_id'])){
+  if (!isset($userId)){
     header("Location:login.php");
     exit;
   }
+
+  $stmt = $pdo->prepare("SELECT * FROM posts WHERE user_id = ?");
+  $stmt->execute([$userId]);
+  $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+
   ?>
 
 <!DOCTYPE html>
@@ -172,29 +179,15 @@
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
         <p>Here are your recent posts on InkRipple.</p>
       </div>
-
-      <div class="post-grid">
-        <div class="post-card">
-          <h3>My First Blog Post</h3>
-          <p>
-            This is a short preview of my first blog post. It’s amazing to start
-            sharing my thoughts on InkRipple.
-          </p>
-        </div>
-        <div class="post-card">
-          <h3>Why Writing Every Day Matters</h3>
-          <p>
-            Daily writing sharpens your creativity and discipline. Small steps
-            lead to big ideas.
-          </p>
-        </div>
-        <div class="post-card">
-          <h3>Lessons from My Coding Journey</h3>
-          <p>
-            Every bug is a lesson, every project a milestone. Coding is a story
-            of growth.
-          </p>
-        </div>
+      <?php foreach($posts AS $post): ?>
+        <div class="post-grid">
+          <div class="post-card">
+            <h3><?php echo htmlspecialchars($post['title'])?></h3>
+            <p>
+              <?php echo htmlspecialchars($post['content'])?>
+            </p>
+          </div>
+      <?php endforeach?>
       </div>
     </div>
   </body>

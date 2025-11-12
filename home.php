@@ -1,14 +1,21 @@
 <?php
   session_start();
   session_regenerate_id(true);
+  include './db/database.php';
+  $userId = $_SESSION['user_id'];
 
 
 
-  if (!isset($_SESSION['user_id'])){
+  if (!isset($userId)){
     header("Location:login.php");
     exit;
   }
-?>
+
+  $stmt = $pdo->prepare("SELECT * FROM posts ");
+  $stmt->execute();
+  $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+
+  ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -201,14 +208,15 @@
     <!-- BLOG POSTS -->
     <div class="container">
       <div class="blog-grid">
-        <div class="blog-card">
-          <h3>Exploring Creativity Through Writing</h3>
-          <p>
-            Writing lets your thoughts ripple outward — shaping ideas and
-            connecting minds.
-          </p>
-        </div>
-        <div class="blog-card">
+        <?php foreach($posts AS $post): ?>
+            <div class="blog-card">
+              <h3><?php echo htmlspecialchars($post['title'])?></h3>
+              <p>
+               <?php echo htmlspecialchars($post['content'])?>
+              </p>
+            </div>
+        <?php endforeach; ?>
+        <!-- <div class="blog-card">
           <h3>Balancing Design and Functionality</h3>
           <p>Good design supports great content — not the other way around.</p>
         </div>
@@ -225,7 +233,7 @@
             Authenticity connects. Learn to sound like you — not like everyone
             else online.
           </p>
-        </div>
+        </div> -->
       </div>
 
       <!-- PAGINATION -->
