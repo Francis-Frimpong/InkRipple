@@ -1,3 +1,13 @@
+<?php
+  
+  include './db/database.php';
+ 
+
+  $stmt = $pdo->prepare("SELECT * FROM posts ");
+  $stmt->execute();
+  $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+
+  ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -137,32 +147,16 @@
 
     <!-- BLOG POSTS -->
     <div class="container">
-      <div class="blog-grid">
-        <div class="blog-card">
-          <h3>Exploring Creativity Through Writing</h3>
-          <p>
-            Writing lets your thoughts ripple outward — shaping ideas and
-            connecting minds.
-          </p>
-        </div>
-        <div class="blog-card">
-          <h3>The Power of Simplicity</h3>
-          <p>
-            Learn why keeping things simple makes your message stronger and more
-            memorable.
-          </p>
-        </div>
-        <div class="blog-card">
-          <h3>Why You Should Start a Blog Today</h3>
-          <p>
-            Sharing your experiences is the best way to learn, grow, and inspire
-            others.
-          </p>
-        </div>
-        <div class="blog-card">
-          <h3>Balancing Design and Functionality</h3>
-          <p>Good design supports great content — not the other way around.</p>
-        </div>
+      <?php foreach($posts AS $post): ?>
+        <div class="blog-grid">
+          <div class="blog-card">
+            <h3><?php echo htmlspecialchars($post['title'])?></h3>
+            <p>
+              <?php echo htmlspecialchars($post['content'])?>
+            </p>
+          </div>
+      <?php endforeach?>
+       
       </div>
 
       <!-- PAGINATION -->
