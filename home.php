@@ -216,24 +216,7 @@
               </p>
             </div>
         <?php endforeach; ?>
-        <!-- <div class="blog-card">
-          <h3>Balancing Design and Functionality</h3>
-          <p>Good design supports great content — not the other way around.</p>
-        </div>
-        <div class="blog-card">
-          <h3>Building Consistency as a Writer</h3>
-          <p>
-            The best blogs grow from discipline — small daily efforts that
-            ripple into mastery.
-          </p>
-        </div>
-        <div class="blog-card">
-          <h3>Finding Your Writing Voice</h3>
-          <p>
-            Authenticity connects. Learn to sound like you — not like everyone
-            else online.
-          </p>
-        </div> -->
+       
       </div>
 
       <!-- PAGINATION -->
