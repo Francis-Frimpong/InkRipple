@@ -21,10 +21,6 @@
   $stmt->execute();
   $rows = $stmt->fetchAll();
 
-  // $stmt = $pdo->prepare("SELECT * FROM posts ");
-  // $stmt->execute();
-  // $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
-
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +85,7 @@
         transform: translateY(-2px);
       }
 
-      /* BLOG GRID */
+    /* BLOG GRID */
       .container {
         max-width: 1000px;
         margin: 2rem auto;
