@@ -11,9 +11,7 @@
     exit;
   }
 
-  // $stmt = $pdo->prepare("SELECT * FROM posts ");
-  // $stmt->execute();
-  // $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+  
 
   $perPage = 5;
   
