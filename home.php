@@ -11,9 +11,28 @@
     exit;
   }
 
-  $stmt = $pdo->prepare("SELECT * FROM posts ");
+  // $stmt = $pdo->prepare("SELECT * FROM posts ");
+  // $stmt->execute();
+  // $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+
+  $perPage = 5;
+  
+  $stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM posts");
+  $totalRows = (int)$stmt->fetchColumn();
+  $totalPages = ($totalRows > 0) ? (int) ceil($totalRows/ $perPage) : 1;
+
+  $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+  if ($page < 1) $page = 1;
+  if ($page > $totalPages) $page = $totalPages;
+
+  $offset = ($page - 1) * $perPage;
+
+  $sql = "SELECT id, title, content FROM posts ORDER BY id DESC LIMIT :offset, :perPage";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+  $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
   $stmt->execute();
-  $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+  $rows = $stmt->fetchAll();
 
   ?>
 <!DOCTYPE html>
@@ -208,11 +227,11 @@
     <!-- BLOG POSTS -->
     <div class="container">
       <div class="blog-grid">
-        <?php foreach($posts AS $post): ?>
+        <?php foreach($rows AS $row): ?>
             <div class="blog-card">
-              <h3><?php echo htmlspecialchars($post['title'])?></h3>
+              <h3><?php echo htmlspecialchars($row['title'])?></h3>
               <p>
-               <?php echo htmlspecialchars($post['content'])?>
+               <?php echo htmlspecialchars($row['content'])?>
               </p>
             </div>
         <?php endforeach; ?>
@@ -220,12 +239,22 @@
       </div>
 
       <!-- PAGINATION -->
-      <div class="pagination">
-        <button>&laquo;</button>
-        <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>&raquo;</button>
+           <div class="pagination">
+           <!-- Previous button -->
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page - 1?>" <?=($page <= 1) ? 'disabled' : ''?>>&laquo;</button>
+        </form>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <form method="get" style="display:inline;">
+            <button name="page" value="<?=$i?>" class="<?=($i == $page) ? 'active' : ''?>"><?=$i?></button>
+          </form>
+        <?php endfor; ?>
+
+        <!-- Next button -->
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page + 1?>" <?=($page >= $totalPages) ? 'disabled' : ''?>>&raquo;</button>
+        </form>
       </div>
     </div>
   </body>

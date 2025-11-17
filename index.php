@@ -180,20 +180,20 @@
       <!-- PAGINATION -->
       <div class="pagination">
            <!-- Previous button -->
-    <form method="get" style="display:inline;">
-      <button name="page" value="<?=$page - 1?>" <?=($page <= 1) ? 'disabled' : ''?>>&laquo;</button>
-    </form>
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page - 1?>" <?=($page <= 1) ? 'disabled' : ''?>>&laquo;</button>
+        </form>
 
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-      <form method="get" style="display:inline;">
-        <button name="page" value="<?=$i?>" class="<?=($i == $page) ? 'active' : ''?>"><?=$i?></button>
-      </form>
-    <?php endfor; ?>
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <form method="get" style="display:inline;">
+            <button name="page" value="<?=$i?>" class="<?=($i == $page) ? 'active' : ''?>"><?=$i?></button>
+          </form>
+        <?php endfor; ?>
 
-    <!-- Next button -->
-    <form method="get" style="display:inline;">
-      <button name="page" value="<?=$page + 1?>" <?=($page >= $totalPages) ? 'disabled' : ''?>>&raquo;</button>
-    </form>
+        <!-- Next button -->
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page + 1?>" <?=($page >= $totalPages) ? 'disabled' : ''?>>&raquo;</button>
+        </form>
       </div>
     </div>
   </body>
