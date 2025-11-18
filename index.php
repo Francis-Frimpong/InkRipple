@@ -166,12 +166,15 @@
       <?php else: ?>
         <?php foreach($rows AS $row): ?>
           <div class="blog-grid">
-            <div class="blog-card">
-              <h3><?php echo htmlspecialchars($row['title'])?></h3>
-              <p>
-                <?php echo htmlspecialchars($row['content'])?>
-              </p>
-            </div>
+              <a href="article.php?<?php echo http_build_query(['title' => $row['title']])?>" class="article">
+                <div class="blog-card">
+                  <h3><?php echo htmlspecialchars($row['title'])?></h3>
+                  <p>
+                    <?php echo htmlspecialchars($row['content'])?>
+                  </p>
+                </div>
+            
+          </a>
         <?php endforeach?>
       <?php endif?>
        
