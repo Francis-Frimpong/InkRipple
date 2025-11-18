@@ -11,9 +11,30 @@
     exit;
   }
 
-  $stmt = $pdo->prepare("SELECT * FROM posts WHERE user_id = ?");
-  $stmt->execute([$userId]);
-  $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
+  $perPage = 5;
+  
+  $stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM posts");
+  $totalRows = (int)$stmt->fetchColumn();
+  $totalPages = ($totalRows > 0) ? (int) ceil($totalRows/ $perPage) : 1;
+
+  $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+  if ($page < 1) $page = 1;
+  if ($page > $totalPages) $page = $totalPages;
+
+  $offset = ($page - 1) * $perPage;
+
+  $sql = "SELECT id, title, content FROM posts  WHERE user_id = :userId
+   ORDER BY id DESC LIMIT :offset, :perPage";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+  $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+  $stmt->execute();
+  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  // $stmt = $pdo->prepare("SELECT * FROM posts WHERE user_id = ?");
+  // $stmt->execute([$userId]);
+  // $posts = $stmt->fetchAll(PDO::FETCH_ASSOC)
 
   ?>
 
@@ -148,6 +169,30 @@
         color: #555;
       }
 
+       /* PAGINATION */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+        gap: 0.5rem;
+      }
+
+      .pagination button {
+        border: none;
+        background: var(--light);
+        padding: 0.5rem 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: 0.3s ease;
+      }
+
+      .pagination button.active,
+      .pagination button:hover {
+        background: var(--accent);
+        color: var(--light);
+      }
+
       @media (min-width: 600px) {
         .post-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -179,16 +224,34 @@
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
         <p>Here are your recent posts on InkRipple.</p>
       </div>
-      <?php foreach($posts AS $post): ?>
+      <?php foreach($rows AS $row): ?>
         <div class="post-grid">
           <div class="post-card">
-            <h3><?php echo htmlspecialchars($post['title'])?></h3>
+            <h3><?php echo htmlspecialchars($row['title'])?></h3>
             <p>
-              <?php echo htmlspecialchars($post['content'])?>
+              <?php echo htmlspecialchars($row['content'])?>
             </p>
           </div>
       <?php endforeach?>
       </div>
     </div>
+     <!-- PAGINATION -->
+           <div class="pagination">
+           <!-- Previous button -->
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page - 1?>" <?=($page <= 1) ? 'disabled' : ''?>>&laquo;</button>
+        </form>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <form method="get" style="display:inline;">
+            <button name="page" value="<?=$i?>" class="<?=($i == $page) ? 'active' : ''?>"><?=$i?></button>
+          </form>
+        <?php endfor; ?>
+
+        <!-- Next button -->
+        <form method="get" style="display:inline;">
+          <button name="page" value="<?=$page + 1?>" <?=($page >= $totalPages) ? 'disabled' : ''?>>&raquo;</button>
+        </form>
+      </div>
   </body>
 </html>
