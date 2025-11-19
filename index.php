@@ -85,6 +85,12 @@
         transform: translateY(-2px);
       }
 
+
+    .article {
+      text-decoration: none;
+      color: inherit;
+    }
+
     /* BLOG GRID */
       .container {
         max-width: 1000px;
@@ -166,7 +172,7 @@
       <?php else: ?>
         <?php foreach($rows AS $row): ?>
           <div class="blog-grid">
-              <a href="article.php?<?php echo http_build_query(['title' => $row['title']])?>" class="article">
+              <a href="article.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
                 <div class="blog-card">
                   <h3><?php echo htmlspecialchars($row['title'])?></h3>
                   <p>
