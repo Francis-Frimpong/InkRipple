@@ -7,7 +7,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $article = $_GET['id'];
 
-$stmt = $pdo->prepare("SELECT * FROM posts WHERE id = ?");
+$stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
 $stmt->execute([$article]);
 $post = $stmt->fetch();
 
@@ -144,7 +144,7 @@ $post = $stmt->fetch();
 
     <h1 class="article-title"><?php echo htmlspecialchars($post['title'])?></h1>
     <div class="article-meta">
-      By John Doe • Published on Feb 18, 2025
+        <?php echo htmlspecialchars("By {$post['full_name']} . Published on {$post['published']}")?>
     </div>
 
     <div class="article-content">
