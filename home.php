@@ -83,6 +83,7 @@
 
       .logout-btn {
         display: inline-block;
+        border: none;
         background: #ef4444; /* red for logout */
         color: var(--light);
         text-decoration: none;

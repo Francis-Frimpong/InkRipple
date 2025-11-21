@@ -222,7 +222,7 @@
       <div class="logo">InkRipple</div>
       <div class="nav-links">
         <a href="home.php">Home</a>
-        <a href="dashboard.html">Dashboard</a>
+        <a href="dashboard.php">Dashboard</a>
         <a href="#">Profile</a>
         <a href="#" class="logout-btn">Logout</a>
       </div>
