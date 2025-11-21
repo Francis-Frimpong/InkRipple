@@ -159,6 +159,49 @@ $post = $stmt->fetch();
       text-decoration: underline;
     }
 
+   /* Button container */
+.action-buttons {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+/* Base button style */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.2s ease;
+  
+  /* Make buttons same size */
+  padding: 0.6rem 0;      /* controls height */
+  min-width: 100px;        /* makes both same width */
+  text-align: center;      /* centers the text */
+  cursor: pointer;
+}
+
+/* Edit button */
+.edit-btn {
+  background: #4f46e5;
+  color: white;
+}
+.edit-btn:hover {
+  background: #3d38b6;
+}
+
+/* Delete button */
+.delete-btn {
+  background: #dc2626;
+  color: white;
+  border: none; /* for button in form */
+}
+.delete-btn:hover {
+  background: #a81c1c;
+}
+
+
+
     @media (max-width: 600px) {
       .container {
         margin: 1rem;
@@ -199,7 +242,22 @@ $post = $stmt->fetch();
       
     </div>
 
-    <a href="dashboard.php" class="back-link">&larr; Back to Home</a>
+    <div class="action-buttons">
+
+  <!-- EDIT BUTTON -->
+  <a href="edit.php?id=POST_ID" class="btn edit-btn">Edit</a>
+
+  <!-- DELETE FORM -->
+  <form action="delete.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+    <input type="hidden" name="id" value="POST_ID">
+    <button type="submit" class="btn delete-btn">Delete</button>
+  </form>
+
+</div>
+
+
+
+    <a href="dashboard.php" class="back-link">&larr; Back to Dashboard</a>
   </div>
     
     
