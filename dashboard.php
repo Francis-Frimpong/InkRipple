@@ -228,18 +228,23 @@
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
         <p>Here are your recent posts on InkRipple.</p>
       </div>
-      <?php foreach($rows AS $row): ?>
-       
-        <div class="post-grid">
-            <a href="dashboardArticleView.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
-              <div class="post-card">
-                <h3><?php echo htmlspecialchars($row['title'])?></h3>
-                <p>
-                  <?php echo htmlspecialchars($row['content'])?>
-                </p>
-              </div>
-            </a>  
-      <?php endforeach?>
+      <?php if(!empty($row)): ?>
+
+        <?php foreach($rows AS $row): ?>
+
+          <div class="post-grid">
+              <a href="dashboardArticleView.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
+                <div class="post-card">
+                  <h3><?php echo htmlspecialchars($row['title'])?></h3>
+                  <p>
+                    <?php echo htmlspecialchars($row['content'])?>
+                  </p>
+                </div>
+              </a>  
+              <?php endforeach?>
+        <?php else: ?>
+          <h2 style="text-align: center; color:#4f46e5"><?php echo 'No post has been created.'?></h2>
+        <?php endif?>
       </div>
     </div>
      <!-- PAGINATION -->
