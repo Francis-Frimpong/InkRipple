@@ -160,6 +160,11 @@
         font-size: 0.95rem;
       }
 
+      .article {
+      text-decoration: none;
+      color: inherit;
+    }
+
       /* PAGINATION */
       .pagination {
         display: flex;
@@ -226,12 +231,14 @@
     <div class="container">
       <div class="blog-grid">
         <?php foreach($rows AS $row): ?>
+          <a href="loginArticle.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
             <div class="blog-card">
               <h3><?php echo htmlspecialchars($row['title'])?></h3>
               <p>
                <?php echo htmlspecialchars($row['content'])?>
               </p>
             </div>
+          </a>
         <?php endforeach; ?>
        
       </div>

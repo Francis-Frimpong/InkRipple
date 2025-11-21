@@ -155,7 +155,7 @@ $post = $stmt->fetch();
       
     </div>
 
-    <a href="index.php" class="back-link">&larr; Back to Home</a>
+    <a href="home.php" class="back-link">&larr; Back to Home</a>
   </div>
 
 </body>
