@@ -200,6 +200,56 @@ $post = $stmt->fetch();
   background: #a81c1c;
 }
 
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;   
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #fff;
+  padding: 20px;
+  width: 350px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-btn {
+  background: #d9534f;
+  color: #fff;
+}
+
+.cancel-btn {
+  background: #eee;
+}
+
+
 
 
     @media (max-width: 600px) {
@@ -248,18 +298,32 @@ $post = $stmt->fetch();
   <a href="edit.php?id=POST_ID" class="btn edit-btn">Edit</a>
 
   <!-- DELETE FORM -->
-  <form action="delete.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
-    <input type="hidden" name="id" value="POST_ID">
-    <button type="submit" class="btn delete-btn">Delete</button>
-  </form>
+    <button class="btn delete-btn">Delete</button>
 
 </div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <h3>Delete Post?</h3>
+    <p>Are you sure you want to delete this post?</p>
+
+    <div class="modal-actions">
+      <form action="delete.php" method="POST">
+        <input type="hidden" name="id" value="POST_ID">
+        <button type="submit" class="btn delete-btn delete">Delete</button>
+      </form>
+
+      <button class="btn cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
 
 
 
     <a href="dashboard.php" class="back-link">&larr; Back to Dashboard</a>
   </div>
     
-    
+    <script src="js/script.js"></script>
   </body>
 </html>
