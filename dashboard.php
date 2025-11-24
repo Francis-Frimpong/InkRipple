@@ -259,13 +259,27 @@
     <div class="container">
       
       <!-- New Post Added notification-->
-       <?php if(isset($_SESSION['success'])): ?>
-        <div class="banner banner-added">
-          <span> <?= $_SESSION['success']; ?></span>
-          <span class="close-btn">×</span>
+      <?php if(isset($_SESSION['success'])): ?>
+        <div class="banner banner-success">
+          <?= $_SESSION['success']; ?>
+          <span class="banner-close">X</span>
         </div>
-      
-        <?php unset($_SESSION['success']); endif; ?>
+      <?php unset($_SESSION['success']); endif; ?>
+
+      <?php if(isset($_SESSION['updated'])): ?>
+        <div class="banner banner-update">
+          <?= $_SESSION['updated']; ?>
+          <span class="banner-close">X</span>
+        </div>
+      <?php unset($_SESSION['updated']); endif; ?>
+
+      <?php if(isset($_SESSION['deleted'])): ?>
+        <div class="banner banner-delete">
+          <?= $_SESSION['deleted']; ?>
+          <span class="banner-close">X</span>
+        </div>
+      <?php unset($_SESSION['deleted']); endif; ?>
+
 
       <div class="welcome">
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>

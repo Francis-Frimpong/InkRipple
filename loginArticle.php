@@ -136,7 +136,6 @@ $post = $stmt->fetch();
   <!-- NAVBAR -->
   <nav>
     <div class="logo">InkRipple</div>
-    <a href="login.php" class="login-btn">Login</a>
   </nav>
 
   <!-- ARTICLE CONTENT -->

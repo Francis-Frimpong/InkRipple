@@ -4,16 +4,12 @@
   include './db/database.php';
   $userId = $_SESSION['user_id'];
 
-  if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-   exit("Invalid article request.");
-}
 
 $article = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
 $stmt->execute([$article]);
 $post = $stmt->fetch();
-
 
 
 
@@ -308,8 +304,8 @@ $post = $stmt->fetch();
     <p>Are you sure you want to delete this post?</p>
 
     <div class="modal-actions">
-      <form action="delete.php" method="POST">
-        <input type="hidden" name="id" value="POST_ID">
+      <form action="dashboard.php" method="POST">
+      <input type="hidden" name="delete" value="">
         <button type="submit" class="btn delete" style="background-color: #d9534f;">Delete</button>
       </form>
 
