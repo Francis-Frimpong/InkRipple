@@ -258,7 +258,7 @@
     <!-- DASHBOARD CONTENT -->
     <div class="container">
       
-      <!-- New Post Added -->
+      <!-- New Post Added notification-->
        <?php if(isset($_SESSION['success'])): ?>
         <div class="banner banner-added">
           <span> <?= $_SESSION['success']; ?></span>
