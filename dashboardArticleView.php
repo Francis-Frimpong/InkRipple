@@ -310,7 +310,7 @@ $post = $stmt->fetch();
     <div class="modal-actions">
       <form action="delete.php" method="POST">
         <input type="hidden" name="id" value="POST_ID">
-        <button type="submit" class="btn delete-btn delete">Delete</button>
+        <button type="submit" class="btn delete" style="background-color: #d9534f;">Delete</button>
       </form>
 
       <button class="btn cancel-btn">Cancel</button>

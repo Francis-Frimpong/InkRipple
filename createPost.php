@@ -17,7 +17,8 @@
     VALUES(?, ? , ?)");
     $stmt->execute([$userId ,$title, $content]);
     
-    header("Location:home.php");
+    $_SESSION['success'] = "Post created successfully!";
+    header("Location:dashboard.php");
     exit;
   
   }
@@ -254,11 +255,13 @@
             ></textarea>
           </div>
 
-          <button type="submit">Publish Post</button>
+          <button type="submit" class="create-btn">Publish Post</button>
         </form>
       </div>
     </div>
 
     <footer>© 2025 InkRipple. All rights reserved.</footer>
+
+    <script src="js/script.js"></script>
   </body>
 </html>

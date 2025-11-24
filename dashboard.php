@@ -211,14 +211,17 @@
 
 .banner-added {
   background: #d9ffd9; /* light green */
+
 }
 
 .banner-updated {
   background: #fff7cc; /* light yellow */
+  display: none;
 }
 
 .banner-deleted {
   background: #ffcccc; /* light red */
+  display: none;
 }
 
 .close-btn {
@@ -254,23 +257,39 @@
 
     <!-- DASHBOARD CONTENT -->
     <div class="container">
+      
+      <!-- New Post Added -->
+       <?php if(isset($_SESSION['success'])): ?>
+        <div class="banner banner-added">
+          <span> <?= $_SESSION['success']; ?></span>
+          <span class="close-btn">×</span>
+        </div>
+      
+        <?php unset($_SESSION['success']); endif; ?>
+
       <div class="welcome">
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_name'])?>👋</h2>
         <p>Here are your recent posts on InkRipple.</p>
       </div>
-      
-            <?php foreach($rows AS $row): ?>
-    
-              <div class="post-grid">
-                  <a href="dashboardArticleView.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
-                    <div class="post-card">
-                      <h3><?php echo htmlspecialchars($row['title'])?></h3>
-                      <p>
-                        <?php echo htmlspecialchars($row['content'])?>
-                      </p>
-                    </div>
-                  </a>  
-                  <?php endforeach?>
+          <?php if(empty($rows)): ?>
+            <h2 style="color: #4f46e5; text-align: center;">No post has been created.</h2>
+            <?php else: ?>
+              
+                    <?php foreach($rows AS $row): ?>
+            
+                      <div class="post-grid">
+                          <a href="dashboardArticleView.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
+                            <div class="post-card">
+                              <h3><?php echo htmlspecialchars($row['title'])?></h3>
+                              <p>
+                                <?php echo htmlspecialchars($row['content'])?>
+                              </p>
+                            </div>
+                          </a>  
+                          <?php endforeach?>
+          <?php endif ?>
+
+                  
         
         
       </div>
@@ -294,23 +313,6 @@
         </form>
       </div>
 
-      <!-- New Post Added -->
-<div class="banner banner-added">
-  <span>New post added</span>
-  <span class="close-btn">×</span>
-</div>
-
-<!-- Post Updated -->
-<div class="banner banner-updated">
-  <span>Post updated</span>
-  <span class="close-btn">×</span>
-</div>
-
-<!-- Post Deleted -->
-<div class="banner banner-deleted">
-  <span>Post deleted</span>
-  <span class="close-btn">×</span>
-</div>
-
+          <script src="js/script.js"></script>
   </body>
 </html>
