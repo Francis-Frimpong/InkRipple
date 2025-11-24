@@ -197,6 +197,36 @@
         color: var(--light);
       }
 
+      .banner {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.banner-added {
+  background: #d9ffd9; /* light green */
+}
+
+.banner-updated {
+  background: #fff7cc; /* light yellow */
+}
+
+.banner-deleted {
+  background: #ffcccc; /* light red */
+}
+
+.close-btn {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
       @media (min-width: 600px) {
         .post-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -263,5 +293,24 @@
           <button name="page" value="<?=$page + 1?>" <?=($page >= $totalPages) ? 'disabled' : ''?>>&raquo;</button>
         </form>
       </div>
+
+      <!-- New Post Added -->
+<div class="banner banner-added">
+  <span>New post added</span>
+  <span class="close-btn">×</span>
+</div>
+
+<!-- Post Updated -->
+<div class="banner banner-updated">
+  <span>Post updated</span>
+  <span class="close-btn">×</span>
+</div>
+
+<!-- Post Deleted -->
+<div class="banner banner-deleted">
+  <span>Post deleted</span>
+  <span class="close-btn">×</span>
+</div>
+
   </body>
 </html>
