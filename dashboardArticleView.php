@@ -22,7 +22,7 @@ $stmt->execute([$id]);
 $post = $stmt->fetch();
 
 
-
+// Delete functionality
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
   if($id && $userId){
