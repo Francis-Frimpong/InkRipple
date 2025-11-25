@@ -17,7 +17,7 @@
     VALUES(?, ? , ?)");
     $stmt->execute([$userId ,$title, $content]);
     
-    $_SESSION['success'] = "Post created successfully!";
+    $_SESSION['updated'] = "Post created successfully!";
     header("Location:dashboard.php");
     exit;
   

@@ -260,15 +260,15 @@
       
       <!-- New Post Added notification-->
       <?php if(isset($_SESSION['success'])): ?>
-        <div class="banner banner-success">
+        <div class="banner banner-added">
           <?= $_SESSION['success']; ?>
           <span class="banner-close">X</span>
         </div>
       <?php unset($_SESSION['success']); endif; ?>
 
       <?php if(isset($_SESSION['updated'])): ?>
-        <div class="banner banner-update">
-          <?= $_SESSION['updated']; ?>
+        <div class="banner banner-updated" style=" background: #fff7cc;">
+          <?= $_SESSION['success']; ?>
           <span class="banner-close">X</span>
         </div>
       <?php unset($_SESSION['updated']); endif; ?>

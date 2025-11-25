@@ -2,16 +2,13 @@
   session_start();
   session_regenerate_id(true);
   include './db/database.php';
-  $userId = $_SESSION['user_id'];
-
+  $userId = $_SESSION['user_id'] ?? null;
 
 $article = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
 $stmt->execute([$article]);
 $post = $stmt->fetch();
-
-
 
  ?>
 <!DOCTYPE html>
@@ -291,28 +288,17 @@ $post = $stmt->fetch();
     <div class="action-buttons">
 
   <!-- EDIT BUTTON -->
-  <a href="edit.php?id=POST_ID" class="btn edit-btn">Edit</a>
+  <a href="edit.php?id=<?php echo $article?>" class="btn edit-btn">Edit</a>
 
   <!-- DELETE FORM -->
-    <button class="btn delete-btn">Delete</button>
-
-</div>
-
-<div class="modal-overlay" id="modal">
-  <div class="modal-box">
-    <h3>Delete Post?</h3>
-    <p>Are you sure you want to delete this post?</p>
-
     <div class="modal-actions">
-      <form action="dashboard.php" method="POST">
-      <input type="hidden" name="delete" value="">
+      <form  action="dashboardArticleView.php" method="POST">
+      <input type="hidden" name="delete-btn" value="">
         <button type="submit" class="btn delete" style="background-color: #d9534f;">Delete</button>
       </form>
-
-      <button class="btn cancel-btn">Cancel</button>
     </div>
-  </div>
 </div>
+
 
 
 

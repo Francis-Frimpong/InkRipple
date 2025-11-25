@@ -27,7 +27,7 @@ class Modal {
 // Notification class
 class BannerNotification {
   constructor() {
-    this.closebanner = document.querySelector(".close-btn");
+    this.closebanner = document.querySelector(".banner-close");
   }
 
   closeBanner() {
