@@ -104,20 +104,7 @@
         background: #e0e0ff;
       }
 
-      .logout-btn {
-        background: #ef4444;
-        color: var(--light);
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background 0.3s ease, transform 0.2s ease;
-      }
-
-      .logout-btn:hover {
-        background: #b91c1c;
-        transform: translateY(-2px);
-      }
+      
 
       /* DASHBOARD SECTION */
       .container {
@@ -251,7 +238,7 @@
         <a href="home.php">Home</a>
         <a href="createPost.php">Create Post</a>
         <a href="#">Profile</a>
-        <a href="#" class="logout-btn">Logout</a>
+        
       </div>
     </nav>
 
