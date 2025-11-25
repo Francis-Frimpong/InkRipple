@@ -315,7 +315,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <div class="action-buttons">
 
   <!-- EDIT BUTTON -->
-  <a href="edit.php?id=<?php echo $article?>" class="btn edit-btn">Edit</a>
+  <a href="edit.php?id=<?php echo $id?>" class="btn edit-btn">Edit</a>
 
   <!-- DELETE FORM -->
     <div class="modal-actions">
