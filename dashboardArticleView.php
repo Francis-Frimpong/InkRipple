@@ -2,15 +2,42 @@
   session_start();
   session_regenerate_id(true);
   include './db/database.php';
-  $userId = $_SESSION['user_id'] ?? null;
+  $userId = $_SESSION['user_id'];
 
-$article = $_GET['id'];
+  if (!isset($_SESSION['user_id'])){
+    die("You must be logged in");
+}
+
+$userId = $_SESSION['user_id'];
+
+if(!isset($_GET['id'])){
+    die("No post selected");
+}
+
+
+$id = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
-$stmt->execute([$article]);
+$stmt->execute([$id]);
 $post = $stmt->fetch();
 
- ?>
+
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+  if($id && $userId){
+      $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?
+    ");
+      $stmt->execute([$id, $userId]);
+    
+      header("Location: dashboard.php");
+      exit;
+
+  }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -292,7 +319,7 @@ $post = $stmt->fetch();
 
   <!-- DELETE FORM -->
     <div class="modal-actions">
-      <form  action="dashboardArticleView.php" method="POST">
+      <form  action="dashboardArticleView.php?id=<?php echo $id ?>" method="POST">
       <input type="hidden" name="delete-btn" value="">
         <button type="submit" class="btn delete" style="background-color: #d9534f;">Delete</button>
       </form>
