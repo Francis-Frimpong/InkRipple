@@ -317,14 +317,26 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   <!-- EDIT BUTTON -->
   <a href="edit.php?id=<?php echo $id?>" class="btn edit-btn">Edit</a>
 
-  <!-- DELETE FORM -->
-    <div class="modal-actions">
-      <form  action="dashboardArticleView.php?id=<?php echo $id ?>" method="POST">
-      <input type="hidden" name="delete-btn" value="">
-        <button type="submit" class="btn delete" style="background-color: #d9534f;">Delete</button>
-      </form>
-    </div>
+  <!-- DELETE BUTTON-->
+   <button class="delete-btn btn" style="background-color: #d9534f;">Delete</button>
 </div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <h3>Delete Post?</h3>
+    <p>Are you sure you want to delete this post?</p>
+
+    <div class="modal-actions">
+      <form action="dashboardArticleView.php?id=<?php echo $id ?>" method="POST">
+        <input type="hidden" name="id" value="POST_ID">
+        <button type="submit" class="btn delete-btn">Delete</button>
+      </form>
+
+      <button class="btn cancel-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 
 
 
