@@ -27,22 +27,27 @@ class Modal {
 // Notification class
 class BannerNotification {
   constructor() {
-    this.closebanner = document.querySelector(".banner-close");
+    this.alertBox = document.querySelector(".alert"); // whole alert
+    this.closeBtn = document.querySelector(".alert-close"); // the X button
   }
 
-  closeBanner() {
-    this.bannerAdd.style.display = "none";
+  closeAlert() {
+    if (this.alertBox) {
+      this.alertBox.style.display = "none";
+    }
   }
 
   addEventListeners() {
-    if (this.closebanner) {
-      this.closebanner.addEventListener("click", () => this.closeBanner());
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener("click", () => this.closeAlert());
     }
   }
 }
 
-const modal = new Modal();
-modal.addEventListeners();
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = new Modal();
+  modal.addEventListeners();
 
-const notification = new BannerNotification();
-notification.addEventListeners();
+  const notification = new BannerNotification();
+  notification.addEventListeners();
+});

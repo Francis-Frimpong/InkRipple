@@ -159,6 +159,12 @@
       .blog-card p {
         color: #555;
         font-size: 0.95rem;
+         display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .article {
@@ -230,17 +236,21 @@
 
     <!-- BLOG POSTS -->
     <div class="container">
-      <div class="blog-grid">
-        <?php foreach($rows AS $row): ?>
-          <a href="loginArticle.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
-            <div class="blog-card">
-              <h3><?php echo htmlspecialchars($row['title'])?></h3>
-              <p>
-               <?php echo htmlspecialchars($row['content'])?>
-              </p>
-            </div>
-          </a>
-        <?php endforeach; ?>
+      <?php if(empty($rows)): ?>
+        <h2 style="color: #4f46e5; text-align:center;">No posts found.</h2>
+      <?php else: ?>
+        <div class="blog-grid">
+          <?php foreach($rows AS $row): ?>
+            <a href="loginArticle.php?<?php echo http_build_query(['id' => $row['id']])?>" class="article">
+              <div class="blog-card">
+                <h3><?php echo htmlspecialchars($row['title'])?></h3>
+                <p>
+                <?php echo htmlspecialchars($row['content'])?>
+                </p>
+              </div>
+            </a>
+          <?php endforeach; ?>
+        <?php endif?>
        
       </div>
 

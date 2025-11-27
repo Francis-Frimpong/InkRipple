@@ -17,7 +17,9 @@
     VALUES(?, ? , ?)");
     $stmt->execute([$userId ,$title, $content]);
     
-    $_SESSION['updated'] = "Post created successfully!";
+    $_SESSION['message'] = "Post added successfully!";
+    $_SESSION['message_type'] = "success";
+    
     header("Location:dashboard.php");
     exit;
   
@@ -99,20 +101,6 @@
         color: var(--accent);
       }
 
-      .logout-btn {
-        background: #ef4444;
-        color: var(--light);
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        font-weight: 500;
-        transition: background 0.3s ease, transform 0.2s ease;
-        text-decoration: none;
-      }
-
-      .logout-btn:hover {
-        background: #b91c1c;
-        transform: translateY(-2px);
-      }
 
       /* FORM CONTAINER */
       .container {
@@ -225,7 +213,7 @@
         <a href="home.php">Home</a>
         <a href="dashboard.php">Dashboard</a>
         <a href="#">Profile</a>
-        <a href="#" class="logout-btn">Logout</a>
+      
       </div>
     </nav>
 

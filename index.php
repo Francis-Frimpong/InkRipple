@@ -124,6 +124,12 @@
       .blog-card p {
         color: #555;
         font-size: 0.95rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       /* PAGINATION */
@@ -168,7 +174,7 @@
     <!-- BLOG POSTS -->
     <div class="container">
       <?php if(empty($rows)): ?>
-        <p>No posts found.</p>
+        <h2 style="color: #4f46e5; text-align:center;">No posts found.</h2>
       <?php else: ?>
         <?php foreach($rows AS $row): ?>
           <div class="blog-grid">

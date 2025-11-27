@@ -29,6 +29,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?
     ");
       $stmt->execute([$id, $userId]);
+
+
+      $_SESSION['message'] = "Post deleted successfully!";
+      $_SESSION['message_type'] = "danger";
     
       header("Location: dashboard.php");
       exit;
@@ -332,7 +336,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <button type="submit" class="btn delete-btn">Delete</button>
       </form>
 
-      <button class="btn cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="btn cancel-btn">Cancel</button>
     </div>
   </div>
 </div>

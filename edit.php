@@ -35,7 +35,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("UPDATE posts SET title = ?, content = ? WHERE id = ? AND user_id = ?");
     $stmt->execute([$title, $content, $id, $userId]);
 
-    $_SESSION['updated'] = "Post updated successfully!";
+    $_SESSION['message'] = "Post updated successfully!";
+    $_SESSION['message_type'] = "success";
     header("Location:dashboard.php");
     exit;
 
