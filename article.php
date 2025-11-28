@@ -1,15 +1,12 @@
 <?php
-include './db/database.php';
+require 'app/Database/Database.php';
+require 'app/Models/IndexModel.php';
+require 'app/Controllers/IndexPageControllers.php';
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-   exit("Invalid article request.");
-}
+use App\Controllers\IndexController;
+$controller = new IndexController();
 
-$article = $_GET['id'];
-
-$stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
-$stmt->execute([$article]);
-$post = $stmt->fetch();
+$post = $controller->showPostDetail();
 
 ?>
 

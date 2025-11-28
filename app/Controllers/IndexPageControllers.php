@@ -16,4 +16,13 @@ class IndexController{
     public function index(){
         return $this->indexModel->fetchAll();
     }
+
+    public function showPostDetail(){
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            exit("Invalid article request.");
+        }
+        $articleId = $_GET['id'];
+
+        return $this->indexModel->detailPost($articleId);
+    }
 }

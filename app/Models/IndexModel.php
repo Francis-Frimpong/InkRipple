@@ -5,6 +5,7 @@ USE PDO;
 
 class IndexPage{
     private $pdo;
+
     public $page;
     public $perPage;
     public $totalRows;
@@ -40,5 +41,12 @@ class IndexPage{
             'page' => $this->page,
             'totalPages' => $this->totalPages
         ];
+    }
+
+    public function detailPost($articleId){
+        $stmt = $this->pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
+        $stmt->execute([$articleId]);
+        $post = $stmt->fetch();
+        return $post;
     }
 }
