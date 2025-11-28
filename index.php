@@ -1,27 +1,21 @@
 <?php
+require 'app/Database/Database.php';
+require 'app/Models/IndexModel.php';
+require 'app/Controllers/IndexPageControllers.php';
+
+use App\Controllers\IndexController;
+$controller = new IndexController();
+
+$data = $controller->index();
+
+$rows = $data['rows'];
+$page = $data['page'];
+$totalPages = $data['totalPages'];
+
+
   
-  include './db/database.php';
- 
-  $perPage = 5;
   
-  $stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM posts");
-  $totalRows = (int)$stmt->fetchColumn();
-  $totalPages = ($totalRows > 0) ? (int) ceil($totalRows/ $perPage) : 1;
-
-  $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-  if ($page < 1) $page = 1;
-  if ($page > $totalPages) $page = $totalPages;
-
-  $offset = ($page - 1) * $perPage;
-
-  $sql = "SELECT id, title, content FROM posts ORDER BY id DESC LIMIT :offset, :perPage";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-  $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-  $stmt->execute();
-  $rows = $stmt->fetchAll();
-
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
