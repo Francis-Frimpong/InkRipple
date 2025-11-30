@@ -1,5 +1,11 @@
 <?php
-  include './db/database.php';
+require 'app/Database/Database.php';
+require 'app/Models/LoginSignupModel.php';
+require 'app/Controllers/LoginSignupControllers.php';
+
+use App\Controllers\LoginSignupController;
+
+$controller = new LoginSignupController();
 
   if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fullname'], $_POST['email'], $_POST['password'])) {
     $name = trim($_POST['fullname']);
@@ -7,26 +13,11 @@
     $password = trim($_POST['password']);
 
     if(empty($name) || empty($email) || empty($password)){
-      echo "All fields are required.";
+      header("Location:signup.php?input-error=input");
       exit;
     }
 
-    // verify if already email exist
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-
-    if($stmt->fetch()){
-      echo "Email already exists!";
-    }
-
-    // hash password and insert user
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $stmt = $pdo->prepare("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)");
-    $stmt->execute([$name, $email, $hashedPassword]);
-    echo "Registration successful!";
-    header("Location:login.php");
-
+   $controller->signup($name, $email, $password);
   }
 
 ?>
@@ -146,6 +137,16 @@
     </style>
   </head>
   <body>
+    <?php if(isset($_GET['input-error'])): ?>
+        <p style="color:red; margin-bottom:10px;">
+          All fields are required.
+        </p>
+    <?php endif; ?>
+    <?php if(isset($_GET['error'])): ?>
+        <p style="color:red; margin-bottom:10px;">
+           Email already exist.
+        </p>
+    <?php endif; ?>
     <div class="form-container">
       <h2>Create Your InkRipple Account</h2>
       <form action="signup.php" method="POST">
