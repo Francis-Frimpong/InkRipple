@@ -1,8 +1,12 @@
 <?php
 session_start();
 session_regenerate_id(true);
-include './db/database.php';
 
+require 'app/Database/Database.php';
+require 'app/Models/DashboardModel.php';
+require 'app/Controllers/DashboardControllers.php';
+
+use App\Controllers\DashboardController;
 $userId = $_SESSION['user_id'] ?? null;
 $userName = $_SESSION['user_name'] ?? 'User';
 
@@ -11,26 +15,13 @@ if (!$userId) {
     exit;
 }
 
-// Pagination setup
-$perPage = 5;
+$controller = new DashboardController();
 
-$stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM posts");
-$totalRows = (int)$stmt->fetchColumn();
-$totalPages = ($totalRows > 0) ? (int)ceil($totalRows / $perPage) : 1;
+$data = $controller->userArticle($userId);
 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$page = max(1, min($page, $totalPages));
-
-$offset = ($page - 1) * $perPage;
-
-// Fetch posts
-$sql = "SELECT id, title, content FROM posts WHERE user_id = :userId ORDER BY id DESC LIMIT :offset, :perPage";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$rows = $data['rows'];
+$page = $data['page'];
+$totalPages = $data['totalPages'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -84,3 +84,25 @@ index.php
 
   }
 
+
+// User post
+// Pagination setup
+$perPage = 5;
+
+$stmt = $pdo->query("SELECT COUNT(*) AS cnt FROM posts");
+$totalRows = (int)$stmt->fetchColumn();
+$totalPages = ($totalRows > 0) ? (int)ceil($totalRows / $perPage) : 1;
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max(1, min($page, $totalPages));
+
+$offset = ($page - 1) * $perPage;
+
+// Fetch posts
+$sql = "SELECT id, title, content FROM posts WHERE user_id = :userId ORDER BY id DESC LIMIT :offset, :perPage";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
