@@ -111,3 +111,15 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
 $stmt->execute([$id]);
 $post = $stmt->fetch();
+
+// Delete post 
+$stmt = $pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?
+    ");
+      $stmt->execute([$id, $userId]);
+
+
+
+
+Lessons From a Failed Project
+By Francis Frimpong . Published on 2025-11-27 07:54:28
+Failure is not the opposite of success—it’s part of it. A failed project teaches discipline, problem-solving, and resilience. Each setback shows what to improve and prepares you for the next opportunity. Learn, adjust, and try again.

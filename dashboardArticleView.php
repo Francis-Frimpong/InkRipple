@@ -35,10 +35,7 @@ $post = $data['post'];
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
   if($id && $userId){
-      $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?
-    ");
-      $stmt->execute([$id, $userId]);
-
+     $deletepost = $controller->deleteUserArticle($id, $userId);
 
       $_SESSION['message'] = "Post deleted successfully!";
       $_SESSION['message_type'] = "danger";

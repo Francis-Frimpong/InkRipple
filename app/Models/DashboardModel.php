@@ -56,4 +56,9 @@ class UserDashboard{
             'post' => $post
         ];
     }
+
+    public function deleteUserPost($id, $userId){
+        $stmt = $this->pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?");
+        $stmt->execute([$id, $userId]);
+    }
 }
