@@ -49,7 +49,7 @@ class UserDashboard{
     }
 
     public function userPostDetail($id){
-        $stmt = $this->pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published', users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
+        $stmt = $this->pdo->prepare("SELECT posts.title, posts.content, DATE( posts.updated_at) AS published, users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
         $stmt->execute([$id]);
         $post = $stmt->fetch();
         return [
