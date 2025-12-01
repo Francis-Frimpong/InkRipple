@@ -16,4 +16,8 @@ class DashboardController{
     public function userArticle($userId){
         return $this->dashboardModel->userPost($userId);
     }
+    
+    public function viewUserArticle($id){
+        return $this->dashboardModel->userPostDetail($id);
+    }
 }

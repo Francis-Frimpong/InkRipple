@@ -1,25 +1,34 @@
 <?php
   session_start();
   session_regenerate_id(true);
-  include './db/database.php';
-  $userId = $_SESSION['user_id'];
 
-  if (!isset($_SESSION['user_id'])){
-    die("You must be logged in");
+require 'app/Database/Database.php';
+require 'app/Models/DashboardModel.php';
+require 'app/Controllers/DashboardControllers.php';
+
+use App\Controllers\DashboardController;
+
+$controller = new DashboardController();
+
+$userId = $_SESSION['user_id'];
+
+if (!isset($_SESSION['user_id'])){
+  die("You must be logged in");
 }
 
 $userId = $_SESSION['user_id'];
 
 if(!isset($_GET['id'])){
-    die("No post selected");
+  die("No post selected");
 }
 
 
 $id = $_GET['id'];
+$data = $controller->viewUserArticle($id);
 
-$stmt = $pdo->prepare("SELECT posts.title, posts.content, posts.updated_at AS 'published' , users.full_name FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
-$stmt->execute([$id]);
-$post = $stmt->fetch();
+$post = $data['post'];
+
+
 
 
 // Delete functionality
@@ -325,6 +334,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
    <button class="delete-btn btn" style="background-color: #d9534f;">Delete</button>
 </div>
 
+<!-- Delete Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal-box">
     <h3>Delete Post?</h3>
