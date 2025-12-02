@@ -1,7 +1,17 @@
-<?php 
+<?php
+
+use App\Controllers\CreatePostController;
+
    session_start();
-   include './db/database.php';
+   
    $userId = $_SESSION['user_id'];
+
+  require 'app/Database/Database.php';
+  require 'app/Models/CreatePostModel.php';
+  require 'app/Controllers/CreatePostControllers.php';
+
+
+  $controller = new CreatePostController();
 
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $title = trim($_POST['title']);
@@ -12,10 +22,9 @@
       exit;
     }
 
-    // insert into poste
-    $stmt = $pdo->prepare("INSERT INTO posts (user_id, title, content) 
-    VALUES(?, ? , ?)");
-    $stmt->execute([$userId ,$title, $content]);
+    // create  post
+    $controller->addPost($userId, $title, $content);
+   
     
     $_SESSION['message'] = "Post added successfully!";
     $_SESSION['message_type'] = "success";
